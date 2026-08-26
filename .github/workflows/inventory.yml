@@ -1,0 +1,116 @@
+name: inventory
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    name: plugin inventory guard
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Enforce allowed plugin contents
+        shell: bash
+        run: |
+          set -uo pipefail
+          fail=0
+
+          # This repo ships part of the system prompt to customers.
+          # Therefore a plugin may only contain declarative text:
+          # .claude-plugin/, output-styles/, skills/. Nothing else.
+          allowed_top='.claude-plugin output-styles skills'
+          denied_names='hooks .mcp.json bin .lsp.json scripts commands agents'
+
+          for plugin in plugins/*/; do
+            plugin="${plugin%/}"
+            [ -d "$plugin" ] || continue
+            echo "== checking $plugin"
+
+            # 1. top-level allowlist
+            while IFS= read -r entry; do
+              name="$(basename "$entry")"
+              ok=0
+              for a in $allowed_top; do
+                if [ "$name" = "$a" ]; then ok=1; fi
+              done
+              if [ "$ok" -ne 1 ]; then
+                echo "::error file=$entry::not allowed in a plugin root: '$name' (allowed: $allowed_top)"
+                fail=1
+              fi
+            done < <(find "$plugin" -mindepth 1 -maxdepth 1)
+
+            # 2. explicitly denied names at any depth
+            for d in $denied_names; do
+              while IFS= read -r hit; do
+                echo "::error file=$hit::forbidden entry '$d' found at $hit"
+                fail=1
+              done < <(find "$plugin" -mindepth 1 -name "$d")
+            done
+
+            # 3. no executable files anywhere in the plugin
+            while IFS= read -r exe; do
+              echo "::error file=$exe::executable file is not allowed in a customer plugin: $exe"
+              fail=1
+            done < <(find "$plugin" -type f -perm -u+x)
+
+            # 4. no shebang files anywhere in the plugin
+            while IFS= read -r f; do
+              if head -c 2 "$f" | grep -q '#!'; then
+                echo "::error file=$f::file starts with a shebang, that makes it a script: $f"
+                fail=1
+              fi
+            done < <(find "$plugin" -type f)
+          done
+
+          # 5. every plugin must carry its manifest
+          for plugin in plugins/*/; do
+            plugin="${plugin%/}"
+            if [ ! -f "$plugin/.claude-plugin/plugin.json" ]; then
+              echo "::error::missing $plugin/.claude-plugin/plugin.json"
+              fail=1
+            fi
+          done
+
+          if [ "$fail" -ne 0 ]; then
+            echo "inventory guard failed"
+            exit 1
+          fi
+          echo "inventory guard passed"
+
+      - name: Version agreement (plugin.json is canonical)
+        shell: bash
+        run: |
+          set -uo pipefail
+          fail=0
+          for plugin in plugins/*/; do
+            plugin="${plugin%/}"
+            name="$(basename "$plugin")"
+            pv="$(grep -o '"version"[[:space:]]*:[[:space:]]*"[^"]*"' "$plugin/.claude-plugin/plugin.json" | head -1 | sed 's/.*"\([^"]*\)"$/\1/')"
+            mv="$(python3 - "$name" <<'PY'
+          import json, sys
+          name = sys.argv[1]
+          data = json.load(open(".claude-plugin/marketplace.json", encoding="utf-8"))
+          for p in data.get("plugins", []):
+              if p.get("name") == name:
+                  print(p.get("version", ""))
+                  break
+          PY
+          )"
+            if [ -z "$pv" ]; then
+              echo "::error::no version in $plugin/.claude-plugin/plugin.json"
+              fail=1
+            elif [ "$pv" != "$mv" ]; then
+              echo "::error::version mismatch for $name: plugin.json=$pv marketplace.json=$mv (plugin.json is canonical)"
+              fail=1
+            else
+              echo "$name version $pv agrees"
+            fi
+          done
+          [ "$fail" -eq 0 ] || exit 1

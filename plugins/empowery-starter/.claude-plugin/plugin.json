@@ -1,0 +1,16 @@
+{
+  "name": "empowery-starter",
+  "version": "0.1.0",
+  "description": "Startpaket für empowery-Kunden: Antwortstil ELI5 und der Skill session-context.",
+  "author": {
+    "name": "empowery GmbH",
+    "email": "db@empowery.io"
+  },
+  "keywords": [
+    "empowery",
+    "kunden",
+    "onboarding",
+    "eli5",
+    "session-context"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "empowery-client",
+  "owner": {
+    "name": "empowery GmbH"
+  },
+  "description": "Kunden-Marktplatz von empowery: Startpaket für Claude Code in Kundenprojekten.",
+  "plugins": [
+    {
+      "name": "empowery-starter",
+      "source": "./plugins/empowery-starter",
+      "description": "Startpaket für empowery-Kunden: der Antwortstil ELI5 (kurze Sätze, ein Gedanke pro Satz, ein klarer nächster Schritt) und ein Skill, der beim Kontext über Sessions hinweg hilft.",
+      "version": "0.1.0",
+      "keywords": [
+        "empowery",
+        "kunden",
+        "onboarding",
+        "eli5",
+        "output-styles",
+        "session-context"
+      ]
+    }
+  ]
+}
