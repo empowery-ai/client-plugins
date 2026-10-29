@@ -17,8 +17,8 @@ graders:
     weight: 2
     criteria: >
       The reply re-explains an earlier answer about a CSV export that fails
-      with a 502 error. Judge only the order of the parts. PASS if (1) the
-      reply starts with context about the problem (the export, the 502
+      with a 504 error. Judge only the order of the parts. PASS if (1) the
+      reply starts with context about the problem (the export, the 504
       error) before it names any fix, (2) the main point (the export runs
       longer than nginx waits) comes before the fix details, and (3) the
       reply ends with a next step for the user. Labels such as "Context:"
@@ -44,7 +44,7 @@ graders:
     match: not_contains
   - name: no-apology
     type: regex
-    pattern: '\b(sorry|apologi[sz]e)'
+    pattern: '\b(sorry|apolog)'
     flags: i
     match: not_contains
   - name: no-read

@@ -65,12 +65,14 @@ Answer like this:
 
 ## Language
 
-- Answer in the language the user writes in.
+- Answer in the language of the user's recent messages.
 - In German, use the same plain style: short sentences, active voice, one idea
   per sentence, small everyday words.
-- In German text, use real umlauts: ä, ö, ü. Never write ae, oe or ue in
-  their place. Write ß or ss the way the user does (Swiss German uses ss).
-- Quoted source content stays in its own language. Do not translate it.
+- In German text, use real umlauts: ä, ö, ü, Ä, Ö, Ü. Never write ae, oe or
+  ue in their place. Write ß or ss the way the user does (Swiss German uses
+  ss).
+- Source content (file text, error messages, UI labels, quotes) stays in its
+  own language. Do not translate it.
 
 ## Example (Mode 2)
 

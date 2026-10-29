@@ -50,7 +50,7 @@ claude plugin install klartext@empowery-client --scope local
 
 `--scope local` heißt: das Plugin gilt nur in diesem einen Projektordner.
 
-Ohne `--scope local` gilt der Antwortstil in **allen** Projekten des Nutzers. Auch in privaten. Das will fast niemand.
+Ohne `--scope local` gilt das Plugin in **allen** Projekten des Nutzers. Bei `empowery-starter` also auch der Antwortstil. Auch in privaten. Das will fast niemand.
 
 Danach Claude Code komplett neu starten. Also das Programm schließen und wieder öffnen.
 `/clear` reicht nicht.
@@ -78,6 +78,12 @@ Eine solche Wahl greift aber erst nach einem vollständigen Neustart von Claude 
 claude plugin disable empowery-starter@empowery-client --scope local
 ```
 
+Für `klartext`:
+
+```bash
+claude plugin disable klartext@empowery-client --scope local
+```
+
 Danach Claude Code neu starten.
 
 **Warum ein Disable im User-Scope nicht reicht:** Ist das Plugin in der Projektdatei `.claude/settings.json` aktiviert, dann gewinnt diese Projektdatei. Ein Disable im User-Scope wird davon überstimmt. Das Plugin bleibt an.
@@ -89,7 +95,8 @@ Darum immer den Scope treffen, in dem es eingeschaltet wurde. Bei Kunden ist das
 ```json
 {
   "enabledPlugins": {
-    "empowery-starter@empowery-client": false
+    "empowery-starter@empowery-client": false,
+    "klartext@empowery-client": false
   }
 }
 ```
@@ -100,10 +107,11 @@ Diese Datei liegt in der Rangfolge über der Projektdatei. Danach `/reload-plugi
 
 Wenn ein Engagement endet, vier Schritte:
 
-1. Plugin entfernen:
+1. Plugins entfernen:
 
    ```bash
    claude plugin uninstall empowery-starter@empowery-client
+   claude plugin uninstall klartext@empowery-client
    ```
 
 2. Marktplatz entfernen:
@@ -132,6 +140,8 @@ Daraus folgen drei feste Regeln:
 
 **Letzte bekannt funktionierende Version: `empowery-starter` 0.1.0.**
 
+Wenn ein Kunde nach einem Update ein Problem meldet, ist das die Version, auf die zurückgesetzt wird.
+
 ## Tests
 
 Die Evals für ein Plugin liegen in `evals/<name>/`, nicht im Plugin-Ordner. Die CI-Schranke erlaubt dort nur `.claude-plugin/`, `output-styles/` und `skills/`.
@@ -143,8 +153,6 @@ evals/run.sh klartext
 ```
 
 Das Skript kopiert Plugin und Evals in einen Temp-Ordner und startet dort `claude plugin eval`. Die Ergebnisse landen in `evals/klartext/results/`. Git ignoriert diesen Ordner.
-
-Wenn ein Kunde nach einem Update ein Problem meldet, ist das die Version, auf die zurückgesetzt wird.
 
 ## Support
 

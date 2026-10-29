@@ -10,8 +10,14 @@ execution:
   prompt: "/klartext:wait-what"
   max_turns: 3
   timeout_seconds: 180
-  allowed_tools: [Read, Grep, Glob, WebSearch]
+  allowed_tools: [Read, Grep, Glob, WebSearch, Bash]
 graders:
+  - name: no-bash
+    type: tool_used
+    tool: Bash
+    min: 0
+    max: 0
+    weight: 2
   - name: no-read
     type: tool_used
     tool: Read

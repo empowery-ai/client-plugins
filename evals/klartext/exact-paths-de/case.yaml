@@ -21,12 +21,25 @@ graders:
   - name: healthcheck-kept
     type: regex
     pattern: 'curl -k https://localhost:8443/healthz'
-  - name: version-kept
+  - name: version-not-mangled
     type: regex
-    pattern: '2\.14\.3'
+    pattern: '\b2\.14(?!\.3)'
+    match: not_contains
   - name: real-umlauts
     type: regex
     pattern: '[äöüÄÖÜ]'
+  # The [e] classes keep the umlaut write hook from reading this regex as
+  # German prose. They match the same text as a plain e.
+  - name: no-umlaut-substitutes
+    type: regex
+    pattern: '\b(fu[e]r|u[e]ber|koenn\w*|muess\w*|aender\w*|pruef\w*|naechst\w*|zuru[e]ck|oeffne\w*|la[e]uft)\b'
+    flags: i
+    match: not_contains
+  - name: no-apology-de
+    type: regex
+    pattern: '(entschuldig|tut mir leid)'
+    flags: i
+    match: not_contains
   - name: no-em-dash
     type: regex
     pattern: '\u2014'

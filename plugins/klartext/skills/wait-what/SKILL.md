@@ -25,12 +25,13 @@ The user did not understand your last message. Say it again, better.
 
 ## Rules
 
-- Write in ASD-STE100 Simplified Technical English. Small words. Short
-  sentences. Active voice. One idea per sentence.
+- Write plain text. Small words. Short sentences. Active voice. One idea per
+  sentence. In English, follow ASD-STE100 Simplified Technical English.
 - If you must use a big word, explain it right after you use it.
 - Replace industry jargon with a plain word, or explain it in the same line.
-- Use the project's own terms if a glossary exists. Do not invent a new term
-  for a thing that already has one.
+- Use the project's own terms if a glossary exists. Take them from this
+  conversation or from the loaded project instructions. Do not open files to
+  look for one. Do not invent a new term for a thing that already has one.
 - Keep exact file paths, exact commands, exact IDs and codes, exact numbers.
   Never shorten them to look tidy.
 - No em dashes.
@@ -42,12 +43,14 @@ The user did not understand your last message. Say it again, better.
 
 ## Language
 
-- Answer in the language the user writes in.
+- Answer in the language of the user's recent messages.
 - In German, use the same plain style: short sentences, active voice, one idea
   per sentence, small everyday words.
-- In German text, use real umlauts: ä, ö, ü. Never write ae, oe or ue in
-  their place. Write ß or ss the way the user does (Swiss German uses ss).
-- Quoted source content stays in its own language. Do not translate it.
+- In German text, use real umlauts: ä, ö, ü, Ä, Ö, Ü. Never write ae, oe or
+  ue in their place. Write ß or ss the way the user does (Swiss German uses
+  ss).
+- Source content (file text, error messages, UI labels, quotes) stays in its
+  own language. Do not translate it.
 
 ## If you cannot re-pitch it
 

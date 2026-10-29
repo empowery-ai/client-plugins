@@ -4,6 +4,10 @@ The history file seeds one finished turn (user question, assistant answer) so th
 case prompt (/klartext:wait-what) has a "last answer" to act on. It uses the
 Claude Code session transcript shape that `context.history_file` loads.
 
+`{EMDASH}` in a source file becomes a real em dash in the seeded turn, so the
+no-em-dash graders have something to resist. The repo files never hold the
+character itself: history.jsonl stores it as a JSON escape.
+
 Usage: python3 evals/klartext/make_history.py evals/klartext/<case>
 """
 import json
@@ -11,9 +15,14 @@ import pathlib
 import sys
 import uuid
 
+EM_DASH = chr(0x2014)
+EM_DASH_ESCAPED = "\\u%04x" % 0x2014
+
 case = pathlib.Path(sys.argv[1])
 question = (case / "prior-question.md").read_text(encoding="utf-8").strip()
 answer = (case / "prior-answer.md").read_text(encoding="utf-8").strip()
+question = question.replace("{EMDASH}", EM_DASH)
+answer = answer.replace("{EMDASH}", EM_DASH)
 
 session = str(uuid.uuid5(uuid.NAMESPACE_URL, "session:" + case.name))
 u_id = str(uuid.uuid5(uuid.NAMESPACE_URL, "user:" + question))
@@ -54,4 +63,4 @@ lines = [
 ]
 with open(case / "history.jsonl", "w", encoding="utf-8") as f:
     for line in lines:
-        f.write(json.dumps(line, ensure_ascii=False) + "\n")
+        f.write(json.dumps(line, ensure_ascii=False).replace(EM_DASH, EM_DASH_ESCAPED) + "\n")
