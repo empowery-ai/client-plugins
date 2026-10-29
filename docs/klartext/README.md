@@ -21,6 +21,9 @@ Sätze im Aktiv, mit einem Gedanken pro Satz. Dateipfade, Befehle und Zahlen
 bleiben exakt. Beide Befehle gelten nur für die eine Antwort. Danach gilt
 wieder dein normaler Antwortstil.
 
+Die Kurzform geht auch: `/wait-what` und `/quick`. Das klappt, solange kein
+anderer Skill denselben Namen trägt.
+
 ### Beispiel: `/klartext:wait-what`
 
 Vorher (Claude):
@@ -92,6 +95,9 @@ Claude never starts them on its own. Only you type them.
 Both commands answer in your language. File paths, commands and numbers stay
 exact. Both commands apply to one answer only. After that, your normal
 output style applies again.
+
+The short form works too: `/wait-what` and `/quick`. This works as long as
+no other skill has the same name.
 
 ### Example: `/klartext:wait-what`
 
