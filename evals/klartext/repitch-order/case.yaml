@@ -1,0 +1,64 @@
+schema_version: "1.1"
+name: repitch-order
+description: >
+  Re-pitch a jargon-heavy answer. Context first, then the point, then only the
+  needed detail, then one next step. Exact path and command survive.
+tags: [wait-what]
+context:
+  history_file: history.jsonl
+execution:
+  prompt: "/klartext:wait-what"
+  max_turns: 3
+  timeout_seconds: 180
+  allowed_tools: [Read, Grep, Glob]
+graders:
+  - name: order
+    type: llm
+    weight: 2
+    criteria: >
+      The reply re-explains an earlier answer about a CSV export that fails
+      with a 504 error. Judge only the order of the parts. PASS if (1) the
+      reply starts with context about the problem (the export, the 504
+      error) before it names any fix, (2) the main point (the export runs
+      longer than nginx waits) comes before the fix details, and (3) the
+      reply ends with a next step for the user. Labels such as "Context:"
+      or "Next step:" are fine. FAIL if the reply starts with the fix, or
+      if it has no next step at the end.
+  - name: plain-words
+    type: llm
+    criteria: >
+      The earlier answer used jargon: "upstream timeout", "reverse proxy
+      layer", "decouple", "request lifecycle", "dataset cardinality". PASS
+      if the reply uses short, plain sentences and each of these ideas that
+      it keeps is either said in plain words or explained right after it is
+      used. FAIL if the reply repeats this jargon without explanation.
+  - name: path-kept
+    type: regex
+    pattern: '/etc/nginx/conf\.d/app\.conf'
+  - name: command-kept
+    type: regex
+    pattern: 'proxy_read_timeout 300s'
+  - name: no-em-dash
+    type: regex
+    pattern: '\u2014'
+    match: not_contains
+  - name: no-apology
+    type: regex
+    pattern: '\b(sorry|apolog)'
+    flags: i
+    match: not_contains
+  - name: no-read
+    type: tool_used
+    tool: Read
+    min: 0
+    max: 0
+  - name: no-grep
+    type: tool_used
+    tool: Grep
+    min: 0
+    max: 0
+  - name: no-glob
+    type: tool_used
+    tool: Glob
+    min: 0
+    max: 0

@@ -1,0 +1,1 @@
+Du musst in `~/.config/kassen-sync/settings.json` den Key `listen_port` von 8080 auf 8443 patchen, dann den Unit-Restart via `systemctl --user restart kassen-sync.service` triggern und den Healthcheck mit `curl -k https://localhost:8443/healthz` verifizieren. Da 2.14.3 den Port beim Boot validiert, failt ein invalider Wert fail-fast statt silent.

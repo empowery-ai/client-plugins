@@ -1,0 +1,38 @@
+schema_version: "1.1"
+name: quick-exact-count
+description: >
+  `/klartext:quick 3 <ask>` gives exactly three numbered items, each a bold
+  title and one sentence, with no wrapper text and no follow-up question.
+tags: [quick]
+execution:
+  prompt: "/klartext:quick 3 ways to make a slow test suite faster"
+  max_turns: 3
+  timeout_seconds: 180
+graders:
+  - name: three-items
+    type: regex
+    pattern: '^\s*\d+\.\s'
+    flags: m
+    match: count:3
+  - name: bold-titles
+    type: regex
+    pattern: '^\s*\d+\.\s+\*\*[^*]+\*\*'
+    flags: m
+    match: count:3
+  - name: no-headers
+    type: regex
+    pattern: '^#'
+    flags: m
+    match: not_contains
+  - name: no-em-dash
+    type: regex
+    pattern: '\u2014'
+    match: not_contains
+  - name: shape
+    type: llm
+    criteria: >
+      PASS only if all of these hold. (1) The reply is a numbered list of
+      exactly three items and nothing else: no intro line, no closing line.
+      (2) Each item is a bold title followed by one short sentence. (3) The
+      three items are different ideas, not reworded twins. (4) The reply
+      asks no follow-up question.
