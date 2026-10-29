@@ -31,6 +31,15 @@ cp -R "$repo/plugins/$name" "$tmp/$name"
 cp -R "$repo/evals/$name" "$tmp/$name/evals"
 rm -rf "$tmp/$name/evals/results"
 
+# Rebuild seeded histories in the copy, so an edit to prior-*.md never runs
+# against a stale history.jsonl.
+if [ -f "$repo/evals/$name/make_history.py" ]; then
+  for f in "$tmp/$name"/evals/*/prior-answer.md; do
+    [ -f "$f" ] || continue
+    python3 -I "$repo/evals/$name/make_history.py" "$(dirname "$f")"
+  done
+fi
+
 out="$repo/evals/$name/results/$(date -u +%Y-%m-%dT%H-%M-%SZ)"
 mkdir -p "$out"
 

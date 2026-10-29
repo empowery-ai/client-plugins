@@ -23,7 +23,7 @@ graders:
     pattern: 'curl -k https://localhost:8443/healthz'
   - name: version-not-mangled
     type: regex
-    pattern: '\b2\.14(?!\.3)'
+    pattern: '(?<![\d.])2\.14(?!\.3)'
     match: not_contains
   - name: real-umlauts
     type: regex
