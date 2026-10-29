@@ -4,12 +4,19 @@ Der Plugin-Marktplatz von empowery für Kunden.
 
 ## Was das ist
 
-Hier liegt ein Plugin für Claude Code: `empowery-starter`.
+Hier liegen zwei Plugins für Claude Code: `empowery-starter` und `klartext`.
 
-Das Plugin bringt zwei Dinge mit:
+`empowery-starter` bringt zwei Dinge mit:
 
 1. **Antwortstil ELI5.** Claude antwortet in kurzen Sätzen. Ein Gedanke pro Satz. Am Ende ein klarer nächster Schritt.
 2. **Skill `session-context`.** Er hilft, wenn Kontext zwischen zwei Arbeits-Sessions verloren geht.
+
+`klartext` bringt zwei Reparatur-Befehle mit. Claude startet sie nie von selbst. Nur der Nutzer tippt sie.
+
+1. **`/klartext:wait-what`** erklärt die letzte Antwort neu, in einfachen Worten.
+2. **`/klartext:quick`** macht die letzte Antwort kurz, oder gibt eine kurze Antwort auf eine neue Frage.
+
+Details, Beispiele und eine englische Fassung: [docs/klartext/README.md](docs/klartext/README.md).
 
 ## Für wen
 
@@ -33,6 +40,12 @@ Ein Befehl:
 
 ```bash
 claude plugin install empowery-starter@empowery-client --scope local
+```
+
+Für `klartext` genauso:
+
+```bash
+claude plugin install klartext@empowery-client --scope local
 ```
 
 `--scope local` heißt: das Plugin gilt nur in diesem einen Projektordner.
@@ -115,9 +128,21 @@ Daraus folgen drei feste Regeln:
 
 - Entwicklung läuft nur auf Branches. Nie direkt auf `main`.
 - Jeder Release bekommt einen git-Tag.
-- Die Versionsnummer in `plugins/empowery-starter/.claude-plugin/plugin.json` ist die einzige kanonische Quelle. `marketplace.json` und `CHANGELOG.md` folgen ihr.
+- Die Versionsnummer in `plugins/<name>/.claude-plugin/plugin.json` ist die einzige kanonische Quelle. `marketplace.json` und `CHANGELOG.md` folgen ihr.
 
-**Letzte bekannt funktionierende Version: 0.1.0.**
+**Letzte bekannt funktionierende Version: `empowery-starter` 0.1.0.**
+
+## Tests
+
+Die Evals für ein Plugin liegen in `evals/<name>/`, nicht im Plugin-Ordner. Die CI-Schranke erlaubt dort nur `.claude-plugin/`, `output-styles/` und `skills/`.
+
+Starten:
+
+```bash
+evals/run.sh klartext
+```
+
+Das Skript kopiert Plugin und Evals in einen Temp-Ordner und startet dort `claude plugin eval`. Die Ergebnisse landen in `evals/klartext/results/`. Git ignoriert diesen Ordner.
 
 Wenn ein Kunde nach einem Update ein Problem meldet, ist das die Version, auf die zurückgesetzt wird.
 

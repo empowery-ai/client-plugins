@@ -1,0 +1,56 @@
+schema_version: "1.1"
+name: wrong-answer-flagged
+description: >
+  The last answer was wrong, not only unclear: `git reset --hard` throws the
+  changes away. The re-pitch says so in one line and gives the right command.
+tags: [wait-what]
+context:
+  history_file: history.jsonl
+execution:
+  prompt: "/klartext:wait-what"
+  max_turns: 3
+  timeout_seconds: 180
+  allowed_tools: [Read, Grep, Glob]
+graders:
+  - name: flagged-and-fixed
+    type: llm
+    weight: 2
+    criteria: >
+      The earlier answer told the user to run `git reset --hard HEAD~1` to
+      undo a commit and keep the changes. That is wrong: --hard deletes
+      the changes. PASS if all of these hold. (1) The reply says that the
+      earlier answer was wrong, and that flag is short: one line, not a
+      paragraph about the mistake. (2) It gives a command that keeps the
+      changes, such as `git reset --soft HEAD~1` or `git reset HEAD~1`.
+      (3) It does not recommend `git reset --hard HEAD~1`.
+  - name: says-wrong
+    type: regex
+    pattern: '\b(wrong|incorrect|mistake)\b'
+    flags: i
+  - name: correct-command
+    type: regex
+    pattern: 'git reset (--soft |--mixed )?HEAD(~1|\^)'
+  - name: no-apology
+    type: regex
+    pattern: '\b(sorry|apologi[sz]e)'
+    flags: i
+    match: not_contains
+  - name: no-em-dash
+    type: regex
+    pattern: '\u2014'
+    match: not_contains
+  - name: no-read
+    type: tool_used
+    tool: Read
+    min: 0
+    max: 0
+  - name: no-grep
+    type: tool_used
+    tool: Grep
+    min: 0
+    max: 0
+  - name: no-glob
+    type: tool_used
+    tool: Glob
+    min: 0
+    max: 0

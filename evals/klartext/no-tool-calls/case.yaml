@@ -1,0 +1,54 @@
+schema_version: "1.1"
+name: no-tool-calls
+description: >
+  The last answer names files and line numbers. The re-pitch must not open,
+  search or list any file. It works only from the answer it already gave.
+tags: [wait-what]
+context:
+  history_file: history.jsonl
+execution:
+  prompt: "/klartext:wait-what"
+  max_turns: 3
+  timeout_seconds: 180
+  allowed_tools: [Read, Grep, Glob, WebSearch]
+graders:
+  - name: no-read
+    type: tool_used
+    tool: Read
+    min: 0
+    max: 0
+    weight: 2
+  - name: no-grep
+    type: tool_used
+    tool: Grep
+    min: 0
+    max: 0
+  - name: no-glob
+    type: tool_used
+    tool: Glob
+    min: 0
+    max: 0
+  - name: no-web-search
+    type: tool_used
+    tool: WebSearch
+    min: 0
+    max: 0
+  - name: file-kept
+    type: regex
+    pattern: 'src/billing/round\.ts'
+  - name: fix-kept
+    type: regex
+    pattern: 'Math\.round\(amount \* 100\)'
+  - name: no-em-dash
+    type: regex
+    pattern: '\u2014'
+    match: not_contains
+  - name: plain-repitch
+    type: llm
+    criteria: >
+      The reply re-explains an earlier answer about invoice totals that are
+      one cent off. PASS if it explains the cause in plain words (the code
+      cuts off the part of a cent instead of rounding it) and either drops
+      the terms "IEEE 754", "binary floating point" and "truncates" or
+      explains each one it keeps. FAIL if it says it opened, read or
+      searched a file for this reply.

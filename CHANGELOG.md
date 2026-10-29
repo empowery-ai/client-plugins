@@ -1,5 +1,12 @@
 # Changelog
 
+## klartext 0.1.0 - 2026-10-29
+
+- Plugin `klartext` angelegt, mit zwei Skills: `wait-what` und `quick`. Beide tragen `disable-model-invocation: true`. Claude startet sie also nie von selbst.
+- Quelle sind zwei interne Skills von empowery. Für Kunden umgeschrieben: neutral formuliert, ohne interne Quellen, mit Sprachregel (antwortet in der Sprache des Nutzers).
+- Doku auf Deutsch und Englisch in `docs/klartext/README.md`.
+- Eval-Suite für `claude plugin eval` in `evals/klartext/`, Start mit `evals/run.sh klartext`.
+
 ## 0.1.0 - 2026-08-26
 
 Erste Version. Alle Doku-Fakten in diesem Repo wurden am 2026-08-26 gegen die laufende Claude-Code-Version geprüft.

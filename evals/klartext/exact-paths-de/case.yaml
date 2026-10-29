@@ -1,0 +1,59 @@
+schema_version: "1.1"
+name: exact-paths-de
+description: >
+  German conversation. The re-pitch answers in German plain style and keeps
+  every path, command, port and version number exactly as it was.
+tags: [wait-what, de]
+context:
+  history_file: history.jsonl
+execution:
+  prompt: "/klartext:wait-what"
+  max_turns: 3
+  timeout_seconds: 180
+  allowed_tools: [Read, Grep, Glob]
+graders:
+  - name: path-kept
+    type: regex
+    pattern: '~/\.config/kassen-sync/settings\.json'
+  - name: restart-kept
+    type: regex
+    pattern: 'systemctl --user restart kassen-sync\.service'
+  - name: healthcheck-kept
+    type: regex
+    pattern: 'curl -k https://localhost:8443/healthz'
+  - name: version-kept
+    type: regex
+    pattern: '2\.14\.3'
+  - name: real-umlauts
+    type: regex
+    pattern: '[äöüÄÖÜ]'
+  - name: no-em-dash
+    type: regex
+    pattern: '\u2014'
+    match: not_contains
+  - name: german-plain
+    type: llm
+    criteria: >
+      PASS if all of these hold. (1) The reply is written in German. (2)
+      Most sentences are short and in the active voice. (3) The four
+      anglicisms of the earlier answer ("patchen", "triggern", "fail-fast",
+      "silent") do not appear without explanation. Other loanwords that are
+      normal in German IT texts, such as Port, Proxy, Client, Firewall,
+      Status, Log or Changelog, are fine. (4) Umlauts are written as ä, ö,
+      ü, not as replacement spellings such as `aendern` or `fuer`.
+      Commands, paths and keys in backticks do not count.
+  - name: no-read
+    type: tool_used
+    tool: Read
+    min: 0
+    max: 0
+  - name: no-grep
+    type: tool_used
+    tool: Grep
+    min: 0
+    max: 0
+  - name: no-glob
+    type: tool_used
+    tool: Glob
+    min: 0
+    max: 0

@@ -1,0 +1,16 @@
+{
+  "name": "klartext",
+  "version": "0.1.0",
+  "description": "Zwei Reparatur-Befehle, wenn eine Antwort nicht ankommt: /klartext:wait-what erklärt die letzte Antwort neu in einfachen Worten, /klartext:quick macht sie kurz.",
+  "author": {
+    "name": "empowery GmbH",
+    "email": "db@empowery.io"
+  },
+  "keywords": [
+    "klartext",
+    "wait-what",
+    "quick",
+    "einfache-sprache",
+    "ste100"
+  ]
+}
