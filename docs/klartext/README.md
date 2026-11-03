@@ -63,6 +63,14 @@ Nachher:
 
 ### Einbau
 
+Ist der Marktplatz noch nicht bekannt, zuerst einmal hinzufügen:
+
+```bash
+claude plugin marketplace add empowery-ai/client-plugins
+```
+
+Dann:
+
 ```bash
 claude plugin install klartext@empowery-client --scope local
 ```
@@ -136,6 +144,14 @@ After:
 > - **Test it** - Restore one backup each month.
 
 ### Install
+
+If the marketplace is not known yet, add it once first:
+
+```bash
+claude plugin marketplace add empowery-ai/client-plugins
+```
+
+Then:
 
 ```bash
 claude plugin install klartext@empowery-client --scope local

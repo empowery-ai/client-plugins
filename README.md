@@ -36,7 +36,13 @@ Ist die Zahl kleiner, erst Claude Code aktualisieren. Sonst funktioniert der Ant
 
 ## Einbau
 
-Ein Befehl:
+Ist der Marktplatz noch nicht bekannt, zuerst einmal hinzufügen. Das ist nötig, wenn kein Kunden-Repo ihn über `extraKnownMarketplaces` mitbringt:
+
+```bash
+claude plugin marketplace add empowery-ai/client-plugins
+```
+
+Dann ein Befehl:
 
 ```bash
 claude plugin install empowery-starter@empowery-client --scope local
