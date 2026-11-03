@@ -61,7 +61,17 @@ Nachher:
 > - **Ablage** - Lege die Datei in `s3://backup/db/` ab.
 > - **Test** - Spiele einmal im Monat ein Backup zurück.
 
-### Einbau
+### Einbau in der Claude-App oder auf claude.ai
+
+1. Links auf **Customize** klicken, dann oben auf **Plugins**.
+2. Rechts oben **Add** und dann **Add marketplace** wählen.
+3. Als URL `https://github.com/empowery-ai/client-plugins` eintragen und auf **Sync** klicken.
+4. `klartext` aus dem neuen Marktplatz hinzufügen.
+
+Danach gibt es `/klartext:wait-what` und `/klartext:quick` im Chat, in Cowork
+und in Claude Code mit demselben Konto.
+
+### Einbau im Terminal (Claude Code)
 
 Ist der Marktplatz noch nicht bekannt, zuerst einmal hinzufügen:
 
@@ -143,7 +153,17 @@ After:
 > - **Store it** - Put the file in `s3://backup/db/`.
 > - **Test it** - Restore one backup each month.
 
-### Install
+### Install in the Claude app or on claude.ai
+
+1. Click **Customize** on the left, then **Plugins** at the top.
+2. Choose **Add**, then **Add marketplace**.
+3. Enter the URL `https://github.com/empowery-ai/client-plugins` and click **Sync**.
+4. Add `klartext` from the new marketplace.
+
+Then `/klartext:wait-what` and `/klartext:quick` work in chat, in Cowork and
+in Claude Code with the same account.
+
+### Install in the terminal (Claude Code)
 
 If the marketplace is not known yet, add it once first:
 

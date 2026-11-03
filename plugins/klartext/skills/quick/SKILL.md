@@ -3,9 +3,9 @@ name: quick
 description: >
   Schnelle Antwort ohne Füllwörter. Drei Modi, je nachdem, was nach dem
   Befehl steht. `/klartext:quick` allein fasst die letzte Antwort zusammen.
-  `/klartext:quick <Frage>` nennt zuerst die Handlung, dann nummerierte
-  Schritte, dann einen nächsten Schritt. `/klartext:quick N <Frage>` gibt
-  genau N Punkte. Nur der Nutzer startet diesen Skill.
+  Mit einer Frage dahinter nennt er zuerst die Handlung, dann nummerierte
+  Schritte, dann einen nächsten Schritt. Mit einer Zahl N und einer Frage
+  gibt er genau N Punkte. Nur der Nutzer startet diesen Skill.
 disable-model-invocation: true
 ---
 

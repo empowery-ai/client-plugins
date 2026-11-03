@@ -23,7 +23,7 @@
       "name": "klartext",
       "source": "./plugins/klartext",
       "description": "Zwei Reparatur-Befehle, wenn eine Antwort nicht ankommt: /klartext:wait-what erklärt die letzte Antwort neu in einfachen Worten, /klartext:quick macht sie kurz. Claude startet sie nie von selbst.",
-      "version": "0.1.0",
+      "version": "0.1.1",
       "keywords": [
         "klartext",
         "wait-what",

@@ -36,7 +36,9 @@ Ist die Zahl kleiner, erst Claude Code aktualisieren. Sonst funktioniert der Ant
 
 ## Einbau
 
-Ist der Marktplatz noch nicht bekannt, zuerst einmal hinzufügen. Das ist nötig, wenn kein Kunden-Repo ihn über `extraKnownMarketplaces` mitbringt:
+**Ohne Terminal, in der Claude-App oder auf claude.ai:** **Customize** > **Plugins** > **Add** > **Add marketplace**, URL `https://github.com/empowery-ai/client-plugins`, dann **Sync**. Danach das gewünschte Plugin aus dem Marktplatz hinzufügen. Schritt für Schritt: [docs/klartext/README.md](docs/klartext/README.md).
+
+**Im Terminal (Claude Code):** Ist der Marktplatz noch nicht bekannt, zuerst einmal hinzufügen. Das ist nötig, wenn kein Kunden-Repo ihn über `extraKnownMarketplaces` mitbringt:
 
 ```bash
 claude plugin marketplace add empowery-ai/client-plugins
