@@ -1,5 +1,10 @@
 # Changelog
 
+## klartext 0.1.1 - 2026-11-03
+
+- Beschreibung von `quick` ohne spitze Klammern. claude.ai lehnt XML-Tags in Skill-Beschreibungen ab und meldete beim Sync zwei Warnungen. Das Verhalten der Skills ändert sich nicht.
+- Doku: Einbau über die Claude-App und claude.ai (Customize > Plugins > Add marketplace) und der einmalige Befehl `claude plugin marketplace add` für das Terminal.
+
 ## klartext 0.1.0 - 2026-10-29
 
 - Plugin `klartext` angelegt, mit zwei Skills: `wait-what` und `quick`. Beide tragen `disable-model-invocation: true`. Claude startet sie also nie von selbst.
