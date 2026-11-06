@@ -4,7 +4,7 @@ Der Plugin-Marktplatz von empowery für Kunden.
 
 ## Was das ist
 
-Hier liegen zwei Plugins für Claude Code: `empowery-starter` und `klartext`.
+Hier liegen drei Plugins für Claude Code: `empowery-starter`, `klartext` und `app-design`.
 
 `empowery-starter` bringt zwei Dinge mit:
 
@@ -17,6 +17,10 @@ Hier liegen zwei Plugins für Claude Code: `empowery-starter` und `klartext`.
 2. **`/klartext:quick`** macht die letzte Antwort kurz, oder gibt eine kurze Antwort auf eine neue Frage.
 
 Details, Beispiele und eine englische Fassung: [docs/klartext/README.md](docs/klartext/README.md).
+
+`app-design` hilft bei der Oberfläche von Web-Apps. Ein Skill mit drei Modi: neue Screens bauen, bestehende Screens prüfen, deutsche Oberflächentexte schreiben. Claude nutzt ihn selbst, wenn es um die Oberfläche geht.
+
+Details und eine englische Fassung: [docs/app-design/README.md](docs/app-design/README.md).
 
 ## Für wen
 
@@ -54,6 +58,12 @@ Für `klartext` genauso:
 
 ```bash
 claude plugin install klartext@empowery-client --scope local
+```
+
+Für `app-design` genauso:
+
+```bash
+claude plugin install app-design@empowery-client --scope local
 ```
 
 `--scope local` heißt: das Plugin gilt nur in diesem einen Projektordner.
