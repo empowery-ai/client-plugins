@@ -1,0 +1,60 @@
+schema_version: "1.1"
+name: review-snippet
+description: >
+  Review a small phone form with six planted defects. The skill must find
+  most of them, give the measured contrast value, and propose German fixes.
+tags: [review]
+execution:
+  prompt: |
+    Prüf diese Eingabemaske für unsere Handwerker-App. Die Monteure nutzen sie auf dem Handy auf der Baustelle.
+
+    ```html
+    <style>
+      body { font-family: system-ui; background: #ffffff; }
+      .hint { color: #9aa0a6; font-size: 12px; }
+      input { border: 1px solid #ccc; padding: 4px; }
+      input.error { border-color: #e53935; }
+      .icon-btn { width: 32px; height: 32px; }
+    </style>
+    <form>
+      <input type="text" placeholder="Menge">
+      <p class="hint">Bitte die Menge in Stück eingeben</p>
+      <input type="text" class="error" placeholder="Baustelle">
+      <button type="button" class="icon-btn"><svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/></svg></button>
+      <button type="submit">Submit</button>
+    </form>
+    ```
+  max_turns: 12
+  timeout_seconds: 600
+graders:
+  - name: skill-used
+    type: tool_used
+    tool: Skill
+    min: 1
+  - name: finds-defects
+    type: llm
+    weight: 3
+    criteria: >
+      The form has six planted defects: (1) placeholders are used instead of
+      visible labels, (2) the hint text #9aa0a6 on white has too little
+      contrast (about 2.6:1, below 4.5:1), (3) the microphone button is
+      icon-only with no accessible name, (4) the icon button is 32 px, below
+      the 44 px touch target for gloved hands, (5) the error is shown only by
+      a red border, with no text, (6) the submit button says "Submit" in
+      English and does not name the action. PASS if the reply finds at least
+      five of the six. FAIL otherwise.
+  - name: german-fixes
+    type: llm
+    criteria: >
+      PASS if the reply proposes concrete German replacement texts, at least
+      one German label and one German button text that names the action (for
+      example "Material senden" or "Bestellung senden"), written with real
+      umlauts where needed. FAIL if it proposes only English texts or no
+      texts.
+  - name: contrast-number
+    type: regex
+    pattern: '2[.,][5-7]\d?\s*:\s*1'
+  - name: no-em-dash
+    type: regex
+    pattern: '\u2014'
+    match: not_contains

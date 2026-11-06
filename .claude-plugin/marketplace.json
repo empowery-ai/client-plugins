@@ -31,6 +31,21 @@
         "einfache-sprache",
         "ste100"
       ]
+    },
+    {
+      "name": "app-design",
+      "source": "./plugins/app-design",
+      "description": "Gestaltung von Web-Apps für Betriebe: neue Screens bauen, bestehende Screens prüfen, deutsche Oberflächentexte schreiben. Für Büro-Tools mit dichten Tabellen und für Handy-Apps auf der Baustelle.",
+      "version": "0.1.0",
+      "keywords": [
+        "app-design",
+        "ui",
+        "ux",
+        "barrierefreiheit",
+        "wcag",
+        "design-tokens",
+        "ux-writing-de"
+      ]
     }
   ]
 }

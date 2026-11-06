@@ -1,0 +1,45 @@
+schema_version: "1.1"
+name: wording-error-de
+description: >
+  A German error message for a phone app on the building site. The order
+  could not be sent because there is no network; it stays saved and goes
+  out later. The skill must give a short, honest German message with a
+  title, a body and a button that names the action.
+tags: [wording]
+execution:
+  prompt: >
+    Schreib mir die Fehlermeldung für unsere Handwerker-App auf dem Handy:
+    Die Materialbestellung konnte nicht gesendet werden, weil gerade kein
+    Netz da ist. Sie bleibt gespeichert und geht automatisch raus, sobald
+    wieder Netz da ist. Gib mir Titel, Text und Knopf.
+  max_turns: 4
+  timeout_seconds: 240
+graders:
+  - name: skill-used
+    type: tool_used
+    tool: Skill
+    min: 1
+  - name: honest-and-calm
+    type: llm
+    weight: 2
+    criteria: >
+      The reply gives a German title, a German body text and a German button
+      label for an error message. PASS if all of this holds: (1) the text says
+      that the order was not sent yet and why (no network), (2) it says that
+      nothing is lost and that it will be sent later on its own, (3) the
+      button label names an action or a clear next step (for example
+      "Später senden", "Jetzt erneut senden" or "Verstanden") and is not a
+      bare "OK", (4) there is no apology filler like "Ups" or "Leider ist ein
+      Fehler aufgetreten", (5) the German reads natural and short. FAIL if any
+      of these is missing.
+  - name: real-umlauts
+    type: llm
+    criteria: >
+      PASS if every German word that needs an umlaut or sharp s is written
+      with the real letter (ä, ö, ü, ß). FAIL if the reply replaces an umlaut
+      with a two-letter spelling (the letter followed by "e") or replaces ß
+      with a double s in a word that needs ß.
+  - name: no-em-dash
+    type: regex
+    pattern: '\u2014'
+    match: not_contains
