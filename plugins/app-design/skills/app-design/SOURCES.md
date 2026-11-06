@@ -241,6 +241,7 @@ Notes:
 | 7 Selection and bulk actions | S2 | `references/21-data-tables.md` Bulk Selection and Actions | adapted |
 | 8 Row actions, detail and inline edit | S2 | `references/21-data-tables.md` Row Expansion and Detail, Table Toolbar | adapted |
 | 8 (aria-controls target, capped histories, open row under a filter) | own | | new |
+| 8 (one decision covering many rows: groups first, folded rows, one-screen block) | own, from the Artikeldatenbank A/B test of 2026-11-06 | | new |
 | 9 Keyboard | S2 | `references/21-data-tables.md` Accessibility (keyboard), corrected | rewritten |
 | 10 Table states | S2 | `references/21-data-tables.md` Empty States and Loading; `references/18-data-visualization.md` Empty and Error States | adapted |
 | 11 Import status | S2 | `references/22-performance-ux.md` Progress Indicators (multi-step) | adapted |
